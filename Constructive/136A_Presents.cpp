@@ -76,7 +76,7 @@ void task()
 
     print(arr);
 
-    
+   
 }
 
 int main()

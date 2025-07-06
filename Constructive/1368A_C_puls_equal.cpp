@@ -69,7 +69,7 @@ void task()
     {
         if(a < b)
         {
-            a+=b;
+            a += b;
         }
         else
         {

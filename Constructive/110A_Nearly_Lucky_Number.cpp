@@ -72,8 +72,6 @@ void task()
     {
         ll digit = number % 10  ;
          
-
-
         if(digit == 4 || digit == 7)
         {
             ++cnt ; 

@@ -3,20 +3,9 @@ using namespace std;
 
 #define ll long long 
 
-void print(int val)
-{
-    cout << val << "\n";
-}
-
-void print(const char * str)
-{
-    cout << str ; 
-}
-
-void print(string str)
-{
-    cout << str ; 
-}
+void print(int val){cout << val << "\n";}
+void print(const char * str){cout << str ; }
+void print(string str){cout << str ;}
 
 ll myPow(ll number , ll power)
 {
