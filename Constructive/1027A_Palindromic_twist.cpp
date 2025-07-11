@@ -73,29 +73,6 @@ bool makeEqual(char &a, char &b)
         return makeEqual(b , a);
     }
 
-    // if(a == 'a')
-    // {
-    //     if(b == 'b')
-    //     {
-    //         return 1 ; 
-    //     }
-    //     else 
-    //     {
-    //         return 0 ; 
-    //     }
-    // }
-    // else if(b == 'z')
-    // {
-    //     if(a == 'y')
-    //     {
-    //         return 1 ; 
-    //     }
-    //     else 
-    //     {
-    //         return 0 ; 
-    //     }
-    // }
-
     return a + 1 == b - 1 ; 
 }
 

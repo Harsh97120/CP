@@ -87,6 +87,7 @@ void task()
             break ; 
         }
         ++cnt ;
+        k -= arr[i].first ; 
 
     }
 
@@ -94,7 +95,7 @@ void task()
 
     loop(i ,0 ,ind)
     {
-        print(arr[i].first , " ");
+        print(arr[i].second , " ");
     }
 
 }

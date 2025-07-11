@@ -77,7 +77,7 @@ void task()
             oddIndeces.pb(i);
         }
 
-        arr[i] = floor(arr[i]/2) ; 
+        arr[i] = (arr[i]/2) ; 
     }
 
     int sum = accumulate(arr.begin() , arr.end() , 0);
