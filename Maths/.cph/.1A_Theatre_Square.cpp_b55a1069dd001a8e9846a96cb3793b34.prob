@@ -1,0 +1,1 @@
+{"name":"Local: 1A_Theatre_Square","url":"c:\\Classroom\\CP\\Maths\\1A_Theatre_Square.cpp","tests":[{"id":1752310981549,"input":"6 6 4","output":"4"},{"id":1752311088782,"input":"1000000000 1000000000 1","output":"1000000000000000000"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Classroom\\CP\\Maths\\1A_Theatre_Square.cpp","group":"local","local":true}
