@@ -46,6 +46,43 @@ void print(const char *str){ cout << str ; }
 void print(vector<string> &arr){ for(auto it : arr){ cout << it << " "; } cout << "\n"; }
 void print(Node *node){ while(node){ cout << node->val << " "; node = node->next; } cout << "\n"; }
 void print(string str){ cout << str ; }
+void print(char &a){cout << a ;}
+
+void print(vector<vector<long long>> &arr){ for(auto &i : arr) for(auto &j : i) cout << j << " \n"[&j == &i.back()]; }
+void print(vector<long long> &arr){ for(auto &i : arr) cout << i << " "; cout << "\n"; }
+void print(vector<pair<long long, long long>> &arr){ for(auto &i : arr) cout << "First: " << i.first << " Second: " << i.second << "\n"; }
+void print(set<vector<long long>> &arr){ for(auto &v : arr){ for(auto x : v) cout << x << " "; cout << "\n"; } }
+void print(long long x, long long y){ cout << "1st: " << x << " 2nd: " << y << "\n"; }
+void print(long long val){ cout << val << "\n"; }
+void print(string &str, long long &val){ cout << str << ": " << val << "\n"; }
+void print(unordered_map<string, long long> &mpp){ for(auto &it : mpp){ cout << "String: " << it.first << " ind: " << it.second << "\n"; } }
+void print(const char *str, long long val){ cout << str << ": " << val << "\n"; }
+void print(long long val , const char * str){ cout << val << str ; }
+void print(long long val , string str){ cout << val << str ; }
+
+void print(vector<vector<double>> &arr){ for(auto &i : arr) for(auto &j : i) cout << j << " \n"[&j == &i.back()]; }
+void print(vector<double> &arr){ for(auto &i : arr) cout << i << " "; cout << "\n"; }
+void print(vector<pair<double, double>> &arr){ for(auto &i : arr) cout << "First: " << i.first << " Second: " << i.second << "\n"; }
+void print(set<vector<double>> &arr){ for(auto &v : arr){ for(auto x : v) cout << x << " "; cout << "\n"; } }
+void print(double x, double y){ cout << "1st: " << x << " 2nd: " << y << "\n"; }
+void print(double val){ cout << val << "\n"; }
+void print(string &str, double &val){ cout << str << ": " << val << "\n"; }
+void print(unordered_map<string, double> &mpp){ for(auto &it : mpp){ cout << "String: " << it.first << " ind: " << it.second << "\n"; } }
+void print(const char *str, double val){ cout << str << ": " << val << "\n"; }
+void print(double val , const char * str){ cout << val << str ; }
+void print(double val , string str){ cout << val << str ; }
+
+void print(vector<vector<float>> &arr){ for(auto &i : arr) for(auto &j : i) cout << j << " \n"[&j == &i.back()]; }
+void print(vector<float> &arr){ for(auto &i : arr) cout << i << " "; cout << "\n"; }
+void print(vector<pair<float, float>> &arr){ for(auto &i : arr) cout << "First: " << i.first << " Second: " << i.second << "\n"; }
+void print(set<vector<float>> &arr){ for(auto &v : arr){ for(auto x : v) cout << x << " "; cout << "\n"; } }
+void print(float x, float y){ cout << "1st: " << x << " 2nd: " << y << "\n"; }
+void print(float val){ cout << val << "\n"; }
+void print(string &str, float &val){ cout << str << ": " << val << "\n"; }
+void print(unordered_map<string, float> &mpp){ for(auto &it : mpp){ cout << "String: " << it.first << " ind: " << it.second << "\n"; } }
+void print(const char *str, float val){ cout << str << ": " << val << "\n"; }
+void print(float val , const char * str){ cout << val << str ; }
+void print(float val , string str){ cout << val << str ; }
 
 vector<vector<int>> MakeAnUndirectedGraph(int &V, vector<vector<int>> &edges){ vector<vector<int>> graph(V); for(auto it : edges){ int u = it[0], v = it[1]; graph[u].pb(v); graph[v].pb(u); } return graph; }
 vector<vector<int>> MakeAnUndirectedGraph(int &V, vector<pair<int, int>> &edges){ vector<vector<int>> graph(V); for(auto it : edges){ int u = it.first, v = it.second; graph[u].pb(v); graph[v].pb(u); } return graph; }
