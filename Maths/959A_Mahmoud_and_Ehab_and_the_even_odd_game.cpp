@@ -71,10 +71,12 @@ void task()
     if(n == 1)
     {
         print("Ehab");
+        return ; 
     }
     else if(n == 2)
     {
         print("Mahmoud");
+        return ;
     }
 
     if(n&1)

@@ -65,6 +65,7 @@ void task()
 {
     int a , b ; 
     cin >> a >> b ; 
+    // Last mod b for if already divisible.
     print((b - a%b)%b , "\n");
 }
 

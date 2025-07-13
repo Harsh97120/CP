@@ -102,7 +102,7 @@ void task()
     double H , L ; 
     cin >> H >> L ; 
 
-    double ans = (L*L - H*H)/(2.0000000000000*H) ; 
+    double ans = (L*L - H*H)/(2.0*H) ; 
 
     string temp = to_string(ans);
     // print(temp);

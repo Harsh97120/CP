@@ -107,9 +107,9 @@ void task()
     int total = r + g + b + w ; 
     int cnt = 0 ;   
     
-    if(r == 0 && 
+    if((r == 0 && 
        g == 0 && 
-       b == 0)
+       b == 0)  || total == 1)
     {
         print("Yes\n");
         return ;

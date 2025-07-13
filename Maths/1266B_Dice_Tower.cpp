@@ -66,7 +66,7 @@ void task()
     ll n ; 
     cin >> n ; 
 
-    (n <= 14 || n%14 > 6)?print("NO\n"):print("YES\n");
+    (n <= 14 || n%14 > 6 || n%14 == 0)?print("NO\n"):print("YES\n");
 }
 
 int main()

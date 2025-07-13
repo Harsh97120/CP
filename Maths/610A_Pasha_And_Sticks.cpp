@@ -76,11 +76,6 @@ void task()
     int cnt = n/4 + (n%4 != 0);
     --cnt ;
 
-    // if(n%4 != 0)
-    // {
-    //      --cnt ; 
-    // }
-
     print(cnt);
 
 }
