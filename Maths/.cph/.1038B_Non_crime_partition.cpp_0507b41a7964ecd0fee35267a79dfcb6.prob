@@ -1,0 +1,1 @@
+{"name":"Local: 1038B_Non_crime_partition","url":"c:\\Classroom\\CP\\Maths\\1038B_Non_crime_partition.cpp","tests":[{"id":1752649720692,"input":"1","output":"NO"},{"id":1752649726107,"input":"3","output":"YES\n1 2 \n2 1 3 "}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Classroom\\CP\\Maths\\1038B_Non_crime_partition.cpp","group":"local","local":true}

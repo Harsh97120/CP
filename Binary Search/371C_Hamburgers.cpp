@@ -97,36 +97,85 @@ class DisJointSet { public: vector<int> size, rank, parent; DisJointSet(int V){ 
 
 int lca(int root, int a, int b, vector<vector<int>> &graph){ if(root == a || root == b) return root; if(graph[root].empty()) return 0; int val1 = 0, val2 = 0, val; for(int child : graph[root]){ val = lca(child, a, b, graph); if(val != 0){ if(val1 == 0) val1 = val; else return root; } } return val1; }
 
+ll f(ll target , ll bread , ll sos , ll cheese , ll b , ll s , ll c , ll pb_ , ll ps ,ll pc)
+{
+    ll rb = target*bread - b ;
+    ll rs = target*sos - s ; 
+    ll rc = target*cheese - c ; 
+
+    ll r = 0;
+
+    if(rb > 0)
+    {
+        r += rb*pb_ ; 
+    }
+
+    if(rs > 0)
+    {
+        r += rs*ps ; 
+    }
+
+    if(rc > 0)
+    {
+        r += rc*pc ; 
+    }
+
+    return r;
+}
 
 void task()
 {
-    int n , m , k ; 
-    cin >> n >> m >> k ; 
+    string str ; 
+    cin >> str ;
 
-    int card = n/k ; 
+    ll n = str.length() ; 
+    ll bread = 0 , sos = 0 , cheese = 0 ;
 
-    if(card*n == m || m == 0)
+    for(int i=0;i < n;++i)
     {
-        print(0 , "\n");
-        return ;
+        if(str[i] == 'B')
+        {
+            ++bread ; 
+        }
+        else if(str[i] == 'S')
+        {
+            ++sos ; 
+        }
+        else 
+        {
+            ++cheese ; 
+        }
     }
 
-    if(m <= card)
+    ll b , s , c , pb_ , ps , pc , r ; 
+    cin >> b >> s >> c 
+        >> pb_ >> ps >> pc  
+        >> r ;  
+
+    ll left = 0 , right = 1e14 + 1 ;
+
+    while(left <= right)
     {
-        print(m, "\n");
-        return ;
+        ll m = left + (right - left)/2 ;
+
+        if(f(m , bread , sos , cheese  ,b , s , c , pb_ , ps , pc) > r)
+        {
+            right = m - 1 ; 
+        }
+        else 
+        {
+            left = m + 1 ; 
+        }
     }
 
-    int remain = m - card ;
-    int max_score = remain/(k-1) + ((remain%(k-1)) != 0) ;
-    print(max(0 ,card - max_score), "\n");
+    print(right , "\n");
 }
 
 int main()
 {
-    ll test_case = 1;
-    cin >> test_case;
-    while(test_case--) 
+    // ll test_case = 1;
+    // cin >> test_case;
+    // while(test_case--) 
         task();
     return 0;
 }

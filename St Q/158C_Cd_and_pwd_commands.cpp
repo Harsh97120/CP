@@ -97,36 +97,68 @@ class DisJointSet { public: vector<int> size, rank, parent; DisJointSet(int V){ 
 
 int lca(int root, int a, int b, vector<vector<int>> &graph){ if(root == a || root == b) return root; if(graph[root].empty()) return 0; int val1 = 0, val2 = 0, val; for(int child : graph[root]){ val = lca(child, a, b, graph); if(val != 0){ if(val1 == 0) val1 = val; else return root; } } return val1; }
 
+void printpath(vector <string> &arr)
+{
+    print("/");
+    for(auto it:arr)
+    {
+        cout << it << "/"; 
+    }
+
+    // cout << "/";
+    
+}
 
 void task()
 {
-    int n , m , k ; 
-    cin >> n >> m >> k ; 
+    int n ; 
+    cin >> n ;
+    string command = "" ; 
+    vector <string> arr ;
+    string dir = ""; 
 
-    int card = n/k ; 
-
-    if(card*n == m || m == 0)
+    loop(i , 0 , n)
     {
-        print(0 , "\n");
-        return ;
-    }
+        cin >> command ; 
 
-    if(m <= card)
-    {
-        print(m, "\n");
-        return ;
-    }
+        if(command == "pwd")
+        {
+            // print(arr);
+            printpath(arr);
+            print("\n");
+        }
+        else 
+        {
+            cin >> command ;
+            stringstream str(command);
 
-    int remain = m - card ;
-    int max_score = remain/(k-1) + ((remain%(k-1)) != 0) ;
-    print(max(0 ,card - max_score), "\n");
+            while(getline(str , dir , '/'))
+            {
+                if(dir == "..")
+                {
+                    if(arr.size() > 0)
+                    {
+                        arr.pop_back(); 
+                    }   
+                }
+                else if(dir.length())
+                {
+                    arr.pb(dir);
+                }
+                else 
+                {
+                    arr.clear();
+                }
+            }
+        }
+    }
 }
 
 int main()
 {
-    ll test_case = 1;
-    cin >> test_case;
-    while(test_case--) 
+    // ll test_case = 1;
+    // cin >> test_case;
+    // while(test_case--) 
         task();
     return 0;
 }

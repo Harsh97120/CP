@@ -97,36 +97,33 @@ class DisJointSet { public: vector<int> size, rank, parent; DisJointSet(int V){ 
 
 int lca(int root, int a, int b, vector<vector<int>> &graph){ if(root == a || root == b) return root; if(graph[root].empty()) return 0; int val1 = 0, val2 = 0, val; for(int child : graph[root]){ val = lca(child, a, b, graph); if(val != 0){ if(val1 == 0) val1 = val; else return root; } } return val1; }
 
+ll myPow(ll number , ll n)
+{
+    ll ans = 1 ; 
+
+    while(n--)
+    {
+        ans = ans*number ;
+    }
+
+    return ans ; 
+}
 
 void task()
 {
-    int n , m , k ; 
-    cin >> n >> m >> k ; 
+    int n ; 
+    cin >> n ;
 
-    int card = n/k ; 
+    ll ans = 2*(myPow(2 , n) - 1);
 
-    if(card*n == m || m == 0)
-    {
-        print(0 , "\n");
-        return ;
-    }
-
-    if(m <= card)
-    {
-        print(m, "\n");
-        return ;
-    }
-
-    int remain = m - card ;
-    int max_score = remain/(k-1) + ((remain%(k-1)) != 0) ;
-    print(max(0 ,card - max_score), "\n");
+    print(ans);
 }
 
 int main()
 {
-    ll test_case = 1;
-    cin >> test_case;
-    while(test_case--) 
+    // ll test_case = 1;
+    // cin >> test_case;
+    // while(test_case--) 
         task();
     return 0;
 }

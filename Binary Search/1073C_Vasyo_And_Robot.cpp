@@ -100,33 +100,119 @@ int lca(int root, int a, int b, vector<vector<int>> &graph){ if(root == a || roo
 
 void task()
 {
-    int n , m , k ; 
-    cin >> n >> m >> k ; 
+    ll n ; 
+    cin >> n ; 
+    
+    string path ; 
+    cin >> path ; 
 
-    int card = n/k ; 
+    ll x , y ; 
+    cin >> x >> y ; 
 
-    if(card*n == m || m == 0)
+    if(abs(x) + abs(y) > n)
     {
-        print(0 , "\n");
+        print(-1);
         return ;
     }
 
-    if(m <= card)
+    ll stu = 0 ;
+    ll std = 0 ; 
+    ll stl = 0 ; 
+    ll str = 0 ;
+
+    ll cx = 0 , cy = 0 ;
+
+    loop(i , 0 , n)
     {
-        print(m, "\n");
-        return ;
+        if(path[i] == 'U')
+        {
+            ++cy ;
+            ++stu ;
+        }
+        else if(path[i] == 'D')
+        {
+            --cy ;
+            ++std ;
+        }
+        else if(path[i] == 'L')
+        {
+            --cx ; 
+            ++stl ; 
+        }
+        else 
+        {
+            ++cx ;
+            ++str ;
+        }
     }
 
-    int remain = m - card ;
-    int max_score = remain/(k-1) + ((remain%(k-1)) != 0) ;
-    print(max(0 ,card - max_score), "\n");
+    ll maxi = -1 ; 
+    ll mini = n ; 
+
+    if(cx != x)
+    {
+        ll cnt = 0 ;
+        if(cx < x)
+        {
+            cnt = x - cx ; 
+            if(cnt < stl)
+            {
+                print(-1 , "\n");
+                return ;
+            }
+            else 
+            {
+                
+            }
+        }
+        else 
+        {
+            cnt = cx - x ; 
+            if(cnt < str)
+            {
+                print(-1 , "\n");
+                return ;
+            }
+        }
+
+        
+    }
+
+    if(cy != y)
+    {
+        ll cnt = 0 ;
+        if(cy < y)
+        {
+            cnt = y - cy ; 
+            if(cnt < std)
+            {
+                print(-1 , "\n");
+                return ;
+            }
+        }
+        else 
+        {
+            cnt = cy - y ; 
+            if(cnt < stu)
+            {
+                print(-1 , "\n");
+                return ;
+            }
+        }
+    }
+
+    
+
+    print(0 , "\n");
+
+    
 }
 
 int main()
 {
-    ll test_case = 1;
-    cin >> test_case;
-    while(test_case--) 
+    // ll test_case = 1;
+    // cin >> test_case;
+    // while(test_case--) 
         task();
     return 0;
 }

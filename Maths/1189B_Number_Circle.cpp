@@ -100,33 +100,39 @@ int lca(int root, int a, int b, vector<vector<int>> &graph){ if(root == a || roo
 
 void task()
 {
-    int n , m , k ; 
-    cin >> n >> m >> k ; 
+    int n ; 
+    cin >> n ; 
 
-    int card = n/k ; 
+    vector <int> arr(n ,0);
 
-    if(card*n == m || m == 0)
+    loop(i , 0 , n)
     {
-        print(0 , "\n");
+        cin >> arr[i];
+    }
+
+    sort(arr.begin() , arr.end());
+
+    if(arr[n-1] >= arr[n-2] + arr[n-3])
+    {
+        print("NO\n");
         return ;
     }
 
-    if(m <= card)
+    print("YES\n");
+
+    if(arr[n-1] >= arr[0] + arr[n-2])
     {
-        print(m, "\n");
-        return ;
+        swap(arr[n-1] , arr[n-2]);
     }
 
-    int remain = m - card ;
-    int max_score = remain/(k-1) + ((remain%(k-1)) != 0) ;
-    print(max(0 ,card - max_score), "\n");
+    print(arr);
 }
 
 int main()
 {
-    ll test_case = 1;
-    cin >> test_case;
-    while(test_case--) 
+    // ll test_case = 1;
+    // cin >> test_case;
+    // while(test_case--) 
         task();
     return 0;
 }

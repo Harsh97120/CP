@@ -100,33 +100,65 @@ int lca(int root, int a, int b, vector<vector<int>> &graph){ if(root == a || roo
 
 void task()
 {
-    int n , m , k ; 
-    cin >> n >> m >> k ; 
+    vector <vector <char>> grid(4 , vector <char> (4 ,0));
 
-    int card = n/k ; 
-
-    if(card*n == m || m == 0)
+    loop(i , 0 ,4)
     {
-        print(0 , "\n");
-        return ;
+        loop(j , 0 , 4)
+        {
+            cin >> grid[i][j] ;
+        }
     }
 
-    if(m <= card)
+    ll cnt1 = 0 ;  // # 
+    ll cnt2 = 0 ;  // .
+
+    loop(i , 0 , 3)
     {
-        print(m, "\n");
-        return ;
+        
+        loop(j , 0 , 3)
+        {
+            cnt1 = 0 ; 
+            cnt2 = 0 ;
+            loop(ind , 0 , 2)
+            {
+                if(grid[i][j+ind] == '#')
+                {
+                    ++cnt1 ;    
+                }
+                else 
+                {
+                    ++cnt2 ; 
+                }
+
+                if(grid[i+1][j+ind] == '#')
+                {
+                    ++cnt1 ; 
+                }
+                else 
+                {
+                    ++cnt2 ;
+                }
+            }
+
+            if(cnt1 >= 3 || cnt2 >= 3)
+            {
+                print("YES\n");
+                return ;
+            }
+        }
+
+       
     }
 
-    int remain = m - card ;
-    int max_score = remain/(k-1) + ((remain%(k-1)) != 0) ;
-    print(max(0 ,card - max_score), "\n");
+    print("NO\n");
 }
 
 int main()
 {
-    ll test_case = 1;
-    cin >> test_case;
-    while(test_case--) 
+    // ll test_case = 1;
+    // cin >> test_case;
+    // while(test_case--) 
         task();
     return 0;
 }

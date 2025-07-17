@@ -98,35 +98,51 @@ class DisJointSet { public: vector<int> size, rank, parent; DisJointSet(int V){ 
 int lca(int root, int a, int b, vector<vector<int>> &graph){ if(root == a || root == b) return root; if(graph[root].empty()) return 0; int val1 = 0, val2 = 0, val; for(int child : graph[root]){ val = lca(child, a, b, graph); if(val != 0){ if(val1 == 0) val1 = val; else return root; } } return val1; }
 
 
+
+vector <bool> generatePrime()
+{
+    vector <bool> isPrime(1e8+1 , 1) ; 
+    isPrime[0] = 0 , isPrime[1] = 0 ;
+    for(int i=2 ; i*i < 1e8 + 1; ++i)
+    {
+        if(isPrime[i])
+        {
+            for(int j=i*i ; j <= 1e8 ; j += i)
+            {
+                isPrime[j] = 0 ;
+            }
+        }        
+    }
+
+    return isPrime ;
+}
+
 void task()
 {
-    int n , m , k ; 
-    cin >> n >> m >> k ; 
+    int cnt = 0 ;
 
-    int card = n/k ; 
+    vector <bool> isPrime = generatePrime();
 
-    if(card*n == m || m == 0)
+    loop(i , 0 , 1e8)
     {
-        print(0 , "\n");
-        return ;
-    }
+        if(isPrime[i])
+        {
+            ++cnt ; 
 
-    if(m <= card)
-    {
-        print(m, "\n");
-        return ;
+            if(cnt % 100 == 1)
+            {
+                print(i , "\n");
+            }
+        }
     }
-
-    int remain = m - card ;
-    int max_score = remain/(k-1) + ((remain%(k-1)) != 0) ;
-    print(max(0 ,card - max_score), "\n");
 }
 
 int main()
 {
-    ll test_case = 1;
-    cin >> test_case;
-    while(test_case--) 
+    // ll test_case = 1;
+    
+    // cin >> test_case;
+    // while(test_case--) 
         task();
     return 0;
 }

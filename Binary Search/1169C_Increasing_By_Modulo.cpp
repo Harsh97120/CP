@@ -97,36 +97,74 @@ class DisJointSet { public: vector<int> size, rank, parent; DisJointSet(int V){ 
 
 int lca(int root, int a, int b, vector<vector<int>> &graph){ if(root == a || root == b) return root; if(graph[root].empty()) return 0; int val1 = 0, val2 = 0, val; for(int child : graph[root]){ val = lca(child, a, b, graph); if(val != 0){ if(val1 == 0) val1 = val; else return root; } } return val1; }
 
+ll isSorted(llVec &arr , ll n  , ll m)
+{
+    ll cnt = 0 ;
+
+    loop(i , 1 , n)
+    {
+        ll take = 0 ;
+        if(arr[i-1] > arr[i])
+        {
+            take = min(m - arr[i-1] , arr[i-1] - arr[i]);
+
+            if(m - arr[i-1] < arr[i-1] - arr[i])
+            {
+                take = m - arr[i-1];
+                arr[i-1] += take ;
+            }
+            else 
+            {
+                take = arr[i-1] - arr[i];
+                arr[i] += take ;
+            }
+        }
+
+        cnt = max(cnt , take);
+    }
+
+    print(arr);
+
+    return cnt ;
+}
 
 void task()
 {
-    int n , m , k ; 
-    cin >> n >> m >> k ; 
+    ll n , m ; 
 
-    int card = n/k ; 
+    cin >> n >> m ; 
 
-    if(card*n == m || m == 0)
+    bool fl = 0 ; 
+
+    llVec arr(n ,0);
+
+    loop(i , 0 , n)
+    {
+        cin >> arr[i];
+        if(i)
+        {
+            if(arr[i] - arr[i-1] < 0)
+            {
+                fl = 1 ; 
+            }
+        }
+    }
+
+    if(!fl)
     {
         print(0 , "\n");
         return ;
     }
 
-    if(m <= card)
-    {
-        print(m, "\n");
-        return ;
-    }
-
-    int remain = m - card ;
-    int max_score = remain/(k-1) + ((remain%(k-1)) != 0) ;
-    print(max(0 ,card - max_score), "\n");
+    ll ans = isSorted(arr , n , m);
+    print(ans , "\n");
 }
 
 int main()
 {
-    ll test_case = 1;
-    cin >> test_case;
-    while(test_case--) 
+    // ll test_case = 1;
+    // cin >> test_case;
+    // while(test_case--) 
         task();
     return 0;
 }

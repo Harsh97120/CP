@@ -98,35 +98,65 @@ class DisJointSet { public: vector<int> size, rank, parent; DisJointSet(int V){ 
 int lca(int root, int a, int b, vector<vector<int>> &graph){ if(root == a || root == b) return root; if(graph[root].empty()) return 0; int val1 = 0, val2 = 0, val; for(int child : graph[root]){ val = lca(child, a, b, graph); if(val != 0){ if(val1 == 0) val1 = val; else return root; } } return val1; }
 
 
+ll f(ll cookies , llVec &a , llVec &b , ll n)
+{
+    ll magic = 0 ;
+
+    ll req =0 ;
+
+    loop(i , 0 , n)
+    {
+        req = cookies*a[i] - b[i];
+        
+        magic += (req > 0) ? req : 0 ;
+    }
+
+    return magic ;
+}
+
+
 void task()
 {
-    int n , m , k ; 
-    cin >> n >> m >> k ; 
+    ll n , k ; 
 
-    int card = n/k ; 
+    cin >> n >> k ;
+    llVec a(n , 0) , b(n ,0);
 
-    if(card*n == m || m == 0)
+    loop(i ,0 , n)
     {
-        print(0 , "\n");
-        return ;
+        cin >> a[i]; 
     }
 
-    if(m <= card)
+    loop(i ,0 , n)
     {
-        print(m, "\n");
-        return ;
+        cin >> b[i]; 
     }
 
-    int remain = m - card ;
-    int max_score = remain/(k-1) + ((remain%(k-1)) != 0) ;
-    print(max(0 ,card - max_score), "\n");
+    ll l = 0 , r = 1LL*INT32_MAX , m = 0; 
+
+    while(l <= r)
+    {
+        m = l + (r - l)/2;
+
+        if(f(m , a , b , n) > k)
+        {
+            r = m - 1 ;
+        }
+        else 
+        {
+            l = m + 1 ; 
+        }
+    }
+
+    print(r , "\n");
+
 }
 
 int main()
 {
-    ll test_case = 1;
-    cin >> test_case;
-    while(test_case--) 
+    // ll test_case = 1;
+    // cin >> test_case;
+    // while(test_case--) 
         task();
     return 0;
 }

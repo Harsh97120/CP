@@ -97,29 +97,59 @@ class DisJointSet { public: vector<int> size, rank, parent; DisJointSet(int V){ 
 
 int lca(int root, int a, int b, vector<vector<int>> &graph){ if(root == a || root == b) return root; if(graph[root].empty()) return 0; int val1 = 0, val2 = 0, val; for(int child : graph[root]){ val = lca(child, a, b, graph); if(val != 0){ if(val1 == 0) val1 = val; else return root; } } return val1; }
 
+ll f(llVec &arr , ll n , ll k)
+{
+    ll cnt = 0 ; 
+    
+    loop(i , 0 , n-1)
+    {
+        ll diff = arr[i+1] - arr[i];
+        cnt += diff < k ? diff : k ; 
+    }
+
+    cnt += k ;
+
+    return cnt ; 
+}
 
 void task()
 {
-    int n , m , k ; 
-    cin >> n >> m >> k ; 
+    ll n , h ; 
+    cin >> n >> h ;  
 
-    int card = n/k ; 
+    ll maxi = 0 ; 
+    ll prev = 0 ; 
 
-    if(card*n == m || m == 0)
+    llVec arr(n ,0);
+
+    loop(i , 0 , n)
     {
-        print(0 , "\n");
-        return ;
+        cin >> arr[i];
+
+        maxi= max(maxi , arr[i] - prev);
+        prev = arr[i];
     }
 
-    if(m <= card)
+    ll l = 1 , r = 1e18 + 1 , m = 0 ; 
+    ll ans = 0 ;
+
+    while(l <= r)
     {
-        print(m, "\n");
-        return ;
+        m = l + (r - l)/2 ;
+
+        if(f(arr , n , m) >= h)
+        {
+            r = m - 1;
+        }
+        else 
+        {
+            l = m + 1 ;    
+        }
+        
     }
 
-    int remain = m - card ;
-    int max_score = remain/(k-1) + ((remain%(k-1)) != 0) ;
-    print(max(0 ,card - max_score), "\n");
+    print(l , "\n");
+
 }
 
 int main()

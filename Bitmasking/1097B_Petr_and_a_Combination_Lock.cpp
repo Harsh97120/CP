@@ -97,36 +97,52 @@ class DisJointSet { public: vector<int> size, rank, parent; DisJointSet(int V){ 
 
 int lca(int root, int a, int b, vector<vector<int>> &graph){ if(root == a || root == b) return root; if(graph[root].empty()) return 0; int val1 = 0, val2 = 0, val; for(int child : graph[root]){ val = lca(child, a, b, graph); if(val != 0){ if(val1 == 0) val1 = val; else return root; } } return val1; }
 
+ll mod = 360 ;
+
+bool f(ll sum , llVec &arr , ll n , ll ind)
+{
+    if(ind == n)
+    {
+        return sum == 0 ;
+    }
+
+    bool l = f((sum + arr[ind])%mod , arr , n , ind+1);
+
+    if(l) return 1 ;
+
+    bool r = f((sum - arr[ind])%mod , arr , n , ind+1);
+
+    return r ;
+}
 
 void task()
 {
-    int n , m , k ; 
-    cin >> n >> m >> k ; 
+    ll n ; 
+    cin >> n ; 
+    llVec arr(n ,0);
 
-    int card = n/k ; 
-
-    if(card*n == m || m == 0)
+    loop(i , 0 , n)
     {
-        print(0 , "\n");
-        return ;
+        cin >> arr[i];
     }
 
-    if(m <= card)
-    {
-        print(m, "\n");
-        return ;
-    }
+    // boolGrid dp()
 
-    int remain = m - card ;
-    int max_score = remain/(k-1) + ((remain%(k-1)) != 0) ;
-    print(max(0 ,card - max_score), "\n");
+    if(f(0 , arr , n , 0))
+    {
+        print("YES\n");
+    }
+    else 
+    {
+        print("NO\n");
+    }
 }
 
 int main()
 {
-    ll test_case = 1;
-    cin >> test_case;
-    while(test_case--) 
+    // ll test_case = 1;
+    // cin >> test_case;
+    // while(test_case--) 
         task();
     return 0;
 }

@@ -1,0 +1,1 @@
+{"name":"Local: 1594B_Special_numbers","url":"c:\\Classroom\\CP\\Bitmasking\\1594B_Special_numbers.cpp","tests":[{"id":1752691291086,"input":"3\n3 4\n2 12\n105 564","output":"9\n12\n3595374"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Classroom\\CP\\Bitmasking\\1594B_Special_numbers.cpp","group":"local","local":true}

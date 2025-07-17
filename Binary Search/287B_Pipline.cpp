@@ -97,36 +97,55 @@ class DisJointSet { public: vector<int> size, rank, parent; DisJointSet(int V){ 
 
 int lca(int root, int a, int b, vector<vector<int>> &graph){ if(root == a || root == b) return root; if(graph[root].empty()) return 0; int val1 = 0, val2 = 0, val; for(int child : graph[root]){ val = lca(child, a, b, graph); if(val != 0){ if(val1 == 0) val1 = val; else return root; } } return val1; }
 
+ll pipe(ll n , ll level)
+{
+    return 2*level + (n*(n-1))/2 - (level*(level+1))/2 ;
+}
+
+ll sum(ll n)
+{
+    return (n*(n+1))/2 ; 
+}
 
 void task()
 {
-    int n , m , k ; 
-    cin >> n >> m >> k ; 
+    ll n , k ; 
 
-    int card = n/k ; 
+    cin >> n >> k ; 
+    --n ; 
 
-    if(card*n == m || m == 0)
+    ll tot = sum(k-1);
+
+    if(tot < n)
     {
-        print(0 , "\n");
+        print(-1 , "\n");
         return ;
     }
 
-    if(m <= card)
+    ll l = 0 , r = k - 1 , m = 0 ;
+
+    while(l <= r)
     {
-        print(m, "\n");
-        return ;
+        m = l + (r - l)/2 ; 
+
+        if(tot - sum(m) < n)
+        {
+            r = m - 1 ;
+        }
+        else 
+        {
+            l = m + 1 ; 
+        }
     }
 
-    int remain = m - card ;
-    int max_score = remain/(k-1) + ((remain%(k-1)) != 0) ;
-    print(max(0 ,card - max_score), "\n");
-}
+    print(k-1-r , "\n");
+;}
 
 int main()
 {
-    ll test_case = 1;
-    cin >> test_case;
-    while(test_case--) 
+    // ll test_case = 1;
+    // cin >> test_case;
+    // while(test_case--) 
         task();
     return 0;
 }

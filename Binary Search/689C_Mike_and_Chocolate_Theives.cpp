@@ -98,35 +98,108 @@ class DisJointSet { public: vector<int> size, rank, parent; DisJointSet(int V){ 
 int lca(int root, int a, int b, vector<vector<int>> &graph){ if(root == a || root == b) return root; if(graph[root].empty()) return 0; int val1 = 0, val2 = 0, val; for(int child : graph[root]){ val = lca(child, a, b, graph); if(val != 0){ if(val1 == 0) val1 = val; else return root; } } return val1; }
 
 
+
+ll cubeRoot(ll val)
+{
+    ll l = 1 , r = (val) , m = 0;
+
+    while(l <= r)
+    {
+        m = l + (r - l)/2 ; 
+
+        ll temp = m*m*m ; 
+
+        if(temp > val)
+        {
+            r = m - 1 ; 
+        }
+        else 
+        {
+            l = m + 1 ; 
+        }
+    }
+
+    return r; 
+}
+
+ll totComb(ll n)
+{
+    ll cnt = 0 ;
+    loop(i , 1 , (n))
+    {
+        if(i*8 >= n)
+        {
+            break ;
+        }
+
+        loop(j , 2 , n)
+        {
+            if(i*j*j*j > n)
+            {
+                break ; 
+            }
+            // print("I" , i);
+            // print("J" , j);
+            // print("\n");
+            ++cnt ;
+        }
+    }
+
+    return cnt ;
+}
+
 void task()
 {
-    int n , m , k ; 
-    cin >> n >> m >> k ; 
+    ll n ; 
+    cin >> n ; 
 
-    int card = n/k ; 
+    ll cr = cubeRoot(n);
 
-    if(card*n == m || m == 0)
+    
+
+    if(cr*cr*cr != n)
     {
-        print(0 , "\n");
+        cout << -1 << "\n";
         return ;
     }
 
-    if(m <= card)
+    if(n == 1)
     {
-        print(m, "\n");
-        return ;
+        print(8 , "\n");
+        return ; 
     }
 
-    int remain = m - card ;
-    int max_score = remain/(k-1) + ((remain%(k-1)) != 0) ;
-    print(max(0 ,card - max_score), "\n");
+    ll l = 1 , r = 1e2 , m = 0 ; 
+
+    while(l <= r)
+    {
+        m = l + (r - l)/2 ;
+        
+        ll save = totComb(m);
+
+        // print("m" , m);
+        // print(save);
+
+        if(totComb(m) >= n)
+        {
+            r = m - 1 ;
+        }
+        else 
+        {
+            l = m + 1 ; 
+        }
+
+    }
+
+    print(l , "\n");
+
 }
 
 int main()
 {
-    ll test_case = 1;
-    cin >> test_case;
-    while(test_case--) 
+    // ll test_case = 1;
+    // cin >> test_case;
+    // while(test_case--) 
         task();
     return 0;
 }

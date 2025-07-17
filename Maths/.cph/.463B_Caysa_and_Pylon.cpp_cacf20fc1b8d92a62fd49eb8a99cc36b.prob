@@ -1,0 +1,1 @@
+{"name":"Local: 463B_Caysa_and_Pylon","url":"c:\\Classroom\\CP\\Maths\\463B_Caysa_and_Pylon.cpp","tests":[{"id":1752610664729,"input":"5\n3 4 3 2 4","output":"4"},{"id":1752610669429,"input":"3\n4 4 4","output":"4"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Classroom\\CP\\Maths\\463B_Caysa_and_Pylon.cpp","group":"local","local":true}

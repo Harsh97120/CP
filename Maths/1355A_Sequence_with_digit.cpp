@@ -97,29 +97,73 @@ class DisJointSet { public: vector<int> size, rank, parent; DisJointSet(int V){ 
 
 int lca(int root, int a, int b, vector<vector<int>> &graph){ if(root == a || root == b) return root; if(graph[root].empty()) return 0; int val1 = 0, val2 = 0, val; for(int child : graph[root]){ val = lca(child, a, b, graph); if(val != 0){ if(val1 == 0) val1 = val; else return root; } } return val1; }
 
+ll maxmin(ll val)
+{
+    int maxi = 0 ; 
+    int mini = 10 ;
+    while(val > 0)
+    {
+        int digit = val % 10 ; 
+
+        maxi = max(digit , maxi);
+        mini = min(digit , mini);
+
+        val /= 10 ;
+    }
+
+    return maxi * mini ;
+}
+
+ll f(ll val , ll k , ll cnt)
+{
+    if(k == cnt)
+    {
+        // auto it = maxmin(val);
+        // ll new_val = val + it.first * it.second ;
+        return val ; 
+    }
+
+    auto it = maxmin(val);
+    ll new_val = val + maxmin(val);
+
+    return f(new_val , k , cnt + 1);
+}
+
+pair <int , int> update(ll number)
+{
+    int maxi = 0 ; 
+    int mini = 10 ;
+    loop(i, 0 , 3)
+    {
+        int digit = number % 10 ; 
+
+        maxi = max(digit , maxi);
+        mini = min(digit , mini);
+
+        number /= 10 ;
+    }
+
+    return {maxi , mini};
+}
 
 void task()
 {
-    int n , m , k ; 
-    cin >> n >> m >> k ; 
+    ll val , k ; 
+    cin >> val >> k ;
 
-    int card = n/k ; 
-
-    if(card*n == m || m == 0)
+    // print(f(val , k , 1) , "\n");
+    
+    loop(i , 1 , k)
     {
-        print(0 , "\n");
-        return ;
+        int x = maxmin(val);
+        val = val +  x;
+        if(x == 0)
+        {
+            break ;
+        } 
     }
 
-    if(m <= card)
-    {
-        print(m, "\n");
-        return ;
-    }
-
-    int remain = m - card ;
-    int max_score = remain/(k-1) + ((remain%(k-1)) != 0) ;
-    print(max(0 ,card - max_score), "\n");
+    print(val);
 }
 
 int main()

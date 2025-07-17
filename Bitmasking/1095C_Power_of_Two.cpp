@@ -100,33 +100,72 @@ int lca(int root, int a, int b, vector<vector<int>> &graph){ if(root == a || roo
 
 void task()
 {
-    int n , m , k ; 
-    cin >> n >> m >> k ; 
+    ll n , bits ; 
+    cin >> n >> bits ;
 
-    int card = n/k ; 
-
-    if(card*n == m || m == 0)
+    if(bits == 1)
     {
-        print(0 , "\n");
+        if(n && !(n & (n-1)))
+        {
+            print("YES\n");
+            print(n , "\n");
+        }
+        else 
+        {
+            print("NO\n");
+        }
         return ;
     }
 
-    if(m <= card)
+    ll temp = n ; 
+    ll min_bits = 0 ;
+
+    llVec arr ; 
+    ll num = 1 ; 
+
+    while(temp)
     {
-        print(m, "\n");
+
+        if(temp % 2)
+        {
+            ++min_bits;
+            // print("Temp" , temp);
+            arr.pb(num);
+        }
+
+        ++num; 
+
+        temp = temp >> 1 ;
+    }
+
+    if(min_bits > bits)
+    {
+        print("NO\n");
         return ;
     }
 
-    int remain = m - card ;
-    int max_score = remain/(k-1) + ((remain%(k-1)) != 0) ;
-    print(max(0 ,card - max_score), "\n");
+    ll sum = accumulate(arr.begin() , arr.end(),0);
+
+    ll remain_bits = bits - arr.size();
+    ll remain_val = n - sum ; 
+
+    while(remain_bits--)
+    {
+        arr.pb(2);
+    }
+
+    print("YES\n");
+
+    print(arr);
+
+
 }
 
 int main()
 {
-    ll test_case = 1;
-    cin >> test_case;
-    while(test_case--) 
+    // ll test_case = 1;
+    // cin >> test_case;
+    // while(test_case--) 
         task();
     return 0;
 }

@@ -100,26 +100,20 @@ int lca(int root, int a, int b, vector<vector<int>> &graph){ if(root == a || roo
 
 void task()
 {
-    int n , m , k ; 
-    cin >> n >> m >> k ; 
+    int a , b , c ; 
+    cin >> a >> b >> c ; 
+    int mini = min(a , min(b , c));
+    int maxi = max(a , max(b , c));
 
-    int card = n/k ; 
 
-    if(card*n == m || m == 0)
+    if((a+b+c)%9 == 0 && mini >= ((a+b+c)/9))
     {
-        print(0 , "\n");
-        return ;
+        print("YES\n");
     }
-
-    if(m <= card)
+    else 
     {
-        print(m, "\n");
-        return ;
+        print("NO\n");
     }
-
-    int remain = m - card ;
-    int max_score = remain/(k-1) + ((remain%(k-1)) != 0) ;
-    print(max(0 ,card - max_score), "\n");
 }
 
 int main()

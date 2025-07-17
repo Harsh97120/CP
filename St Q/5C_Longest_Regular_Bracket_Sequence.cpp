@@ -100,33 +100,71 @@ int lca(int root, int a, int b, vector<vector<int>> &graph){ if(root == a || roo
 
 void task()
 {
-    int n , m , k ; 
-    cin >> n >> m >> k ; 
+    string str ; 
+    cin >> str ;
 
-    int card = n/k ; 
+    ll maxlen = 0 ; 
+    ll cnt = 1 ;
 
-    if(card*n == m || m == 0)
+    ll n = str.length() ; 
+
+    vector <ll> dp(n , 0);
+
+
+    loop(i , 1 , n)
     {
-        print(0 , "\n");
-        return ;
+        if(str[i] == ')')
+        {
+            if(str[i-1] == '(')
+            {
+                if(i >= 2)
+                {
+                    dp[i] = dp[i-2] + 2 ; 
+                } 
+                else 
+                {
+                    dp[i] = 2 ; 
+                }
+            }
+            else if(i - dp[i-1] > 0 && str[i - dp[i-1] - 1] == '(')
+            {
+                if(i-dp[i-1] >= 2)
+                {
+                    dp[i] = dp[i-1] + dp[i - dp[i-1] - 2] + 2 ;
+                }
+                else 
+                {
+                    dp[i] = dp[i-1] + 2 ; 
+                }
+            }
+        }
+
+        maxlen = max(maxlen , dp[i]);
     }
 
-    if(m <= card)
+    if(maxlen == 0)
     {
-        print(m, "\n");
+        cout << maxlen << " " << cnt << "\n";
         return ;
+    }    
+
+    loop(i ,0 , n)
+    {
+        if(dp[i] == maxlen)
+        {
+            ++cnt;
+        }
     }
 
-    int remain = m - card ;
-    int max_score = remain/(k-1) + ((remain%(k-1)) != 0) ;
-    print(max(0 ,card - max_score), "\n");
+    cout << maxlen << " " << cnt-1 << "\n";
+
 }
 
 int main()
 {
-    ll test_case = 1;
-    cin >> test_case;
-    while(test_case--) 
+    // ll test_case = 1;
+    // cin >> test_case;
+    // while(test_case--) 
         task();
     return 0;
 }
