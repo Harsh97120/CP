@@ -97,97 +97,69 @@ class DisJointSet { public: vector<int> size, rank, parent; DisJointSet(int V){ 
 
 int lca(int root, int a, int b, vector<vector<int>> &graph){ if(root == a || root == b) return root; if(graph[root].empty()) return 0; int val1 = 0, val2 = 0, val; for(int child : graph[root]){ val = lca(child, a, b, graph); if(val != 0){ if(val1 == 0) val1 = val; else return root; } } return val1; }
 
-llVec nextGreaterElement(llVec &arr)
-{
-    stack <ll> st ; 
-    ll n = arr.size();
-    llVec nge(n , n);
-
-    dloop(i , n - 1 , 0)
-    {
-        while(!st.empty() && arr[i] > arr[st.top()])
-        {
-            st.pop();
-        }
-
-        if(!st.empty())
-        {
-            nge[i] = st.top();
-        }
-
-        st.push(i);
-    }
-
-    return nge ; 
-
-}
-
-llVec prevGreaterElement(llVec &arr)
-{
-    stack <ll> st ; 
-    ll n = arr.size();
-    llVec pge(n , -1);
-
-    loop(i , 0 , n)
-    {
-        while(!st.empty() && arr[i] > arr[st.top()])
-        {
-            st.pop();
-        }
-
-        if(!st.empty())
-        {
-            pge[i] = st.top();
-        }
-
-        st.push(i);
-    }
-
-    return pge ; 
-
-}
-
-ll f(llVec &arr , llVec &nge , llVec &pge)
-{
-    ll cnt = 0 ;
-    ll n = arr.size();
-    
-    loop(i , 0 , n)
-    {
-        
-    }
-}
 
 void task()
 {
-    ll n , m ; 
-
-    cin >> n >> m ; 
-
-    bool fl = 0 ; 
-
-    llVec arr(n ,0);
+    ll n ; 
+    cin >> n ; 
+    unordered_map <ll , ll> mpp ;
+    ll val = 0 ;
+    DisJointSet dsu(n+1);
+    vector <ll> parent(n+1 , -1);
+    
+    
 
     loop(i , 0 , n)
     {
-        cin >> arr[i];
-        if(i)
+        cin >> val ; 
+        
+        parent[i+1] = val ; 
+
+        if(val == -1)
         {
-            if(arr[i] - arr[i-1] < 0)
+            mpp[i+1] = 1;
+        }
+
+    }
+
+    loop(i , 1 , n+1)
+    {
+        if(parent[i] == -1) continue; 
+        loop(j , 1 , n+1)
+        {
+            if(parent[j] == -1) continue; 
+            if(parent[parent[i]] != j && i != parent[parent[j]])
             {
-                fl = 1 ; 
+                dsu.UnionBySize(i , j);
             }
         }
     }
 
-    if(!fl)
-    {
-        print(0 , "\n");
-        return ;
-    }
+    ll ans = 0 ;
 
-    llVec nge = nextGreaterElement(arr);
-    llVec pge = prevGreaterElement(arr);
+    loop(i , 1 , n+1)
+    {
+        if(dsu.find(i) == i)
+        {
+            ++ans ; 
+        }
+    }
+    
+    // loop(i , 1 , n+1)
+    // {
+    //     if(parent[i] != -1)
+    //     {
+    //         ll sup = parent[parent[i]];
+
+    //         if(mpp.find(sup) == mpp.end())
+    //         {
+    //             --ans;
+    //             break ; 
+    //         }
+    //     }
+    // }
+
+    print(ans);
     
 }
 

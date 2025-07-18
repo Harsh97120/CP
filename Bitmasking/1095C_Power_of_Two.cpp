@@ -149,15 +149,8 @@ void task()
     ll remain_bits = bits - arr.size();
     ll remain_val = n - sum ; 
 
-    while(remain_bits--)
-    {
-        arr.pb(2);
-    }
-
     print("YES\n");
-
     print(arr);
-
 
 }
 

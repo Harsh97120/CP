@@ -96,99 +96,110 @@ vector<vector<int>> MakeADirectedGraphMatrix(int &n, vector<vector<int>> &edges)
 class DisJointSet { public: vector<int> size, rank, parent; DisJointSet(int V){ size.resize(V + 1, 1); rank.resize(V + 1, 0); parent.resize(V + 1); for(int i = 0; i <= V; ++i) parent[i] = i; } int find(int x){ return parent[x] == x ? x : parent[x] = find(parent[x]); } void UnionByRank(int x, int y){ int u = find(x), v = find(y); if(u == v) return; if(rank[u] < rank[v]) parent[u] = v; else if(rank[u] > rank[v]) parent[v] = u; else { parent[u] = v; rank[v]++; } } void UnionBySize(int x, int y){ int u = find(x), v = find(y); if(u == v) return; if(size[u] < size[v]) parent[u] = v, size[v] += size[u]; else parent[v] = u, size[u] += size[v]; } };
 
 int lca(int root, int a, int b, vector<vector<int>> &graph){ if(root == a || root == b) return root; if(graph[root].empty()) return 0; int val1 = 0, val2 = 0, val; for(int child : graph[root]){ val = lca(child, a, b, graph); if(val != 0){ if(val1 == 0) val1 = val; else return root; } } return val1; }
-
-llVec nextGreaterElement(llVec &arr)
+bool isValid;
+bool hasCycle(ll node , ll parent ,
+              vector <vector <ll>> &graph , 
+              vector <bool> &vis)
 {
-    stack <ll> st ; 
-    ll n = arr.size();
-    llVec nge(n , n);
+    vis[node] = 1 ; 
 
-    dloop(i , n - 1 , 0)
+    for(auto it: graph[node])
     {
-        while(!st.empty() && arr[i] > arr[st.top()])
+        if(!vis[it])
         {
-            st.pop();
+            if(hasCycle(it , node , graph , vis))
+            {
+                return 1 ; 
+            }
         }
-
-        if(!st.empty())
+        else if(it != parent)
         {
-            nge[i] = st.top();
+            // print("Cnt" , cnt);
+            // print("Tot" , tot);
+            return 1 ; 
         }
-
-        st.push(i);
     }
 
-    return nge ; 
-
+    return 0 ; 
 }
 
-llVec prevGreaterElement(llVec &arr)
+
+
+void print(unordered_map <ll ,vector <ll>> &mpp)
 {
-    stack <ll> st ; 
-    ll n = arr.size();
-    llVec pge(n , -1);
-
-    loop(i , 0 , n)
+    for(auto it:mpp)
     {
-        while(!st.empty() && arr[i] > arr[st.top()])
+        print(it.first , "-");
+        for(auto x:it.second)
         {
-            st.pop();
+            print(x , " ");
         }
 
-        if(!st.empty())
-        {
-            pge[i] = st.top();
-        }
-
-        st.push(i);
+        print("\n");
     }
-
-    return pge ; 
-
 }
 
-ll f(llVec &arr , llVec &nge , llVec &pge)
+bool all1(vector <vector <ll>> &graph , vector <ll> &vec)
 {
-    ll cnt = 0 ;
-    ll n = arr.size();
-    
-    loop(i , 0 , n)
+    for(auto it:vec)
     {
-        
+        if(graph[it].size() != 2)
+        {
+            return 0 ;
+        }
     }
+
+    return 1 ; 
 }
 
 void task()
 {
-    ll n , m ; 
+    ll n , m , u , v; 
+    cin >> n >> m; 
 
-    cin >> n >> m ; 
+    DisJointSet dsu(n+1);
+    vector <vector <ll>> graph(n+1);
 
-    bool fl = 0 ; 
-
-    llVec arr(n ,0);
-
-    loop(i , 0 , n)
+    loop(i , 0 , m)
     {
-        cin >> arr[i];
-        if(i)
+        cin >> u >> v ; 
+        graph[u].pb(v);
+        graph[v].pb(u);
+        dsu.UnionBySize(u , v);
+    }
+
+    unordered_map <ll ,vector <ll>> mpp ;
+
+    loop(i , 1 , n+1)
+    {
+        ll par = dsu.find(i);
+        mpp[par].pb(i);
+    }
+
+    ll ans = 0 ;
+
+    // print(mpp);
+
+    vector <bool> vis(n+1 , 0);
+
+    for(auto it:mpp)
+    {
+        vector <ll> vec = it.second ;
+        // print(vec);
+
+        if(vec.size() >= 3)
         {
-            if(arr[i] - arr[i-1] < 0)
+            vector <bool> vis(n+1 , 0);
+            isValid = 0 ; 
+            if(hasCycle(vec[0] , -1 , graph , vis) && all1(graph ,vec))
             {
-                fl = 1 ; 
+                ++ans ;
             }
+
         }
     }
 
-    if(!fl)
-    {
-        print(0 , "\n");
-        return ;
-    }
-
-    llVec nge = nextGreaterElement(arr);
-    llVec pge = prevGreaterElement(arr);
-    
+    print(ans , "\n");
 }
 
 int main()

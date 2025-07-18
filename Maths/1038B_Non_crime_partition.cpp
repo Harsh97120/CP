@@ -105,9 +105,11 @@ void task()
 
     if(n <= 2)
     {
-        print("NO\n");
+        print("No\n");
         return ; 
     }
+
+    print("Yes\n");
 
     int s1 = (n/2) + (n%2);
     int s2 = n - s1 ; 

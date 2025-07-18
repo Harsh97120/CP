@@ -97,66 +97,6 @@ class DisJointSet { public: vector<int> size, rank, parent; DisJointSet(int V){ 
 
 int lca(int root, int a, int b, vector<vector<int>> &graph){ if(root == a || root == b) return root; if(graph[root].empty()) return 0; int val1 = 0, val2 = 0, val; for(int child : graph[root]){ val = lca(child, a, b, graph); if(val != 0){ if(val1 == 0) val1 = val; else return root; } } return val1; }
 
-llVec nextGreaterElement(llVec &arr)
-{
-    stack <ll> st ; 
-    ll n = arr.size();
-    llVec nge(n , n);
-
-    dloop(i , n - 1 , 0)
-    {
-        while(!st.empty() && arr[i] > arr[st.top()])
-        {
-            st.pop();
-        }
-
-        if(!st.empty())
-        {
-            nge[i] = st.top();
-        }
-
-        st.push(i);
-    }
-
-    return nge ; 
-
-}
-
-llVec prevGreaterElement(llVec &arr)
-{
-    stack <ll> st ; 
-    ll n = arr.size();
-    llVec pge(n , -1);
-
-    loop(i , 0 , n)
-    {
-        while(!st.empty() && arr[i] > arr[st.top()])
-        {
-            st.pop();
-        }
-
-        if(!st.empty())
-        {
-            pge[i] = st.top();
-        }
-
-        st.push(i);
-    }
-
-    return pge ; 
-
-}
-
-ll f(llVec &arr , llVec &nge , llVec &pge)
-{
-    ll cnt = 0 ;
-    ll n = arr.size();
-    
-    loop(i , 0 , n)
-    {
-        
-    }
-}
 
 void task()
 {
@@ -164,31 +104,51 @@ void task()
 
     cin >> n >> m ; 
 
-    bool fl = 0 ; 
-
-    llVec arr(n ,0);
-
-    loop(i , 0 , n)
+    if(n == m)
     {
-        cin >> arr[i];
-        if(i)
+        print(0);
+        return ;
+    }
+    else if(n > m)
+    {
+        print(n-m);
+        return ; 
+    }
+
+    // queue <pair <ll , ll>> q ; 
+    // priority_queue <pair <ll , ll> , vector <pair <ll , ll>> , greater <pair <ll , ll>>> q ;
+    priority_queue <pair <ll , ll>> q ;
+    q.push({n , 0});
+
+    while(!q.empty())
+    {
+        // auto it = q.front();
+        auto it = q.top();
+        q.pop();
+
+        ll cnt = it.first ; 
+        ll num = it.second ;
+
+        if(num == m)
         {
-            if(arr[i] - arr[i-1] < 0)
-            {
-                fl = 1 ; 
-            }
+            print(cnt , "\n");
+            return ; 
+        }
+
+        if(num <= m)
+        {
+            // q.push({2*num , cnt+1});
+            q.push({cnt+1 , 2*num});
+        }
+
+        if(num > 1)
+        {
+            // q.push({num-1 , cnt+1});
+            q.push({cnt+1 , num -1});   
         }
     }
 
-    if(!fl)
-    {
-        print(0 , "\n");
-        return ;
-    }
-
-    llVec nge = nextGreaterElement(arr);
-    llVec pge = prevGreaterElement(arr);
-    
+    // BFS
 }
 
 int main()

@@ -97,98 +97,64 @@ class DisJointSet { public: vector<int> size, rank, parent; DisJointSet(int V){ 
 
 int lca(int root, int a, int b, vector<vector<int>> &graph){ if(root == a || root == b) return root; if(graph[root].empty()) return 0; int val1 = 0, val2 = 0, val; for(int child : graph[root]){ val = lca(child, a, b, graph); if(val != 0){ if(val1 == 0) val1 = val; else return root; } } return val1; }
 
-llVec nextGreaterElement(llVec &arr)
-{
-    stack <ll> st ; 
-    ll n = arr.size();
-    llVec nge(n , n);
-
-    dloop(i , n - 1 , 0)
-    {
-        while(!st.empty() && arr[i] > arr[st.top()])
-        {
-            st.pop();
-        }
-
-        if(!st.empty())
-        {
-            nge[i] = st.top();
-        }
-
-        st.push(i);
-    }
-
-    return nge ; 
-
-}
-
-llVec prevGreaterElement(llVec &arr)
-{
-    stack <ll> st ; 
-    ll n = arr.size();
-    llVec pge(n , -1);
-
-    loop(i , 0 , n)
-    {
-        while(!st.empty() && arr[i] > arr[st.top()])
-        {
-            st.pop();
-        }
-
-        if(!st.empty())
-        {
-            pge[i] = st.top();
-        }
-
-        st.push(i);
-    }
-
-    return pge ; 
-
-}
-
-ll f(llVec &arr , llVec &nge , llVec &pge)
-{
-    ll cnt = 0 ;
-    ll n = arr.size();
-    
-    loop(i , 0 , n)
-    {
-        
-    }
-}
 
 void task()
 {
-    ll n , m ; 
+    string str , badstr ; 
+    ll k ;
+    cin >> str >> badstr >> k ;
 
-    cin >> n >> m ; 
+    ll n = str.length() ; 
+    vector <bool> bad(26 , 0);
 
-    bool fl = 0 ; 
-
-    llVec arr(n ,0);
-
-    loop(i , 0 , n)
+    loop(i , 0 , 26)
     {
-        cin >> arr[i];
-        if(i)
+        if(badstr[i] == '0')
         {
-            if(arr[i] - arr[i-1] < 0)
-            {
-                fl = 1 ; 
-            }
+            bad[i] = 1;
         }
     }
 
-    if(!fl)
+    ll l = 0 ; 
+    ll badcnt = 0 ;
+    // set <string> all ;
+    unordered_map <string , bool> mpp ;
+
+    loop(r , 0 , n)
     {
-        print(0 , "\n");
-        return ;
+        char ch = str[r];
+        if(bad[ch-'a'])
+        {
+            ++badcnt ; 
+        }
+
+        if(badcnt <= k)
+        {
+            loop(i , l , r+1)
+            {
+                // print("r" , r);
+                // print(str.substr(i , i-l+1));
+                // print("\n");
+                mpp[str.substr(i , i-l+1)] = 1 ; 
+            }
+        }
+
+        if(badcnt > k && l < r)
+        {
+            if(bad[str[l]])
+            {
+                --badcnt ;
+            }
+
+            ++l;
+        }
+       
     }
 
-    llVec nge = nextGreaterElement(arr);
-    llVec pge = prevGreaterElement(arr);
-    
+    // ll ans = all.size();
+    ll ans = mpp.size();
+
+    print(ans , "\n");
 }
 
 int main()

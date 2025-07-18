@@ -97,98 +97,101 @@ class DisJointSet { public: vector<int> size, rank, parent; DisJointSet(int V){ 
 
 int lca(int root, int a, int b, vector<vector<int>> &graph){ if(root == a || root == b) return root; if(graph[root].empty()) return 0; int val1 = 0, val2 = 0, val; for(int child : graph[root]){ val = lca(child, a, b, graph); if(val != 0){ if(val1 == 0) val1 = val; else return root; } } return val1; }
 
-llVec nextGreaterElement(llVec &arr)
+void dfs(ll node , ll no_cat , ll m ,
+         vector <bool> &hascat , 
+         vector <bool> & canreach , 
+         vector <bool> &vis ,
+        vector <vector <ll>> &graph)
 {
-    stack <ll> st ; 
-    ll n = arr.size();
-    llVec nge(n , n);
-
-    dloop(i , n - 1 , 0)
+    vis[node] = 1 ;
+    if(graph[node].size() == 0)
     {
-        while(!st.empty() && arr[i] > arr[st.top()])
+        // if(no_cat <= m)
         {
-            st.pop();
+            // print("No cat" , no_cat);
+            canreach[node] = 1 ; 
         }
 
-        if(!st.empty())
-        {
-            nge[i] = st.top();
-        }
-
-        st.push(i);
+        return ;
     }
 
-    return nge ; 
-
-}
-
-llVec prevGreaterElement(llVec &arr)
-{
-    stack <ll> st ; 
-    ll n = arr.size();
-    llVec pge(n , -1);
-
-    loop(i , 0 , n)
-    {
-        while(!st.empty() && arr[i] > arr[st.top()])
-        {
-            st.pop();
-        }
-
-        if(!st.empty())
-        {
-            pge[i] = st.top();
-        }
-
-        st.push(i);
-    }
-
-    return pge ; 
-
-}
-
-ll f(llVec &arr , llVec &nge , llVec &pge)
-{
-    ll cnt = 0 ;
-    ll n = arr.size();
-    
-    loop(i , 0 , n)
+    for(auto it:graph[node])
     {
         
+        if(hascat[it])
+        {
+            if(no_cat+1 <= m)
+            {
+                dfs(it , no_cat+1 , m , hascat , canreach , vis , graph);
+            }
+            
+        }
+        else 
+        {
+            dfs(it , 0 , m , hascat , canreach, vis , graph);
+        }
+        
+            
     }
 }
 
 void task()
 {
-    ll n , m ; 
+    ll n , m , x; 
+    cin >> n >> m; 
 
-    cin >> n >> m ; 
-
-    bool fl = 0 ; 
-
-    llVec arr(n ,0);
+    vector <bool> hascat(n+1 , 0) , canReach(n+1 , 0) , vis(n+1 , 0);
 
     loop(i , 0 , n)
     {
-        cin >> arr[i];
-        if(i)
+        cin >> x ; 
+        if(x)
         {
-            if(arr[i] - arr[i-1] < 0)
-            {
-                fl = 1 ; 
-            }
+            hascat[i+1] = 1 ; 
         }
     }
 
-    if(!fl)
+    // print("Has Cat:");
+    // print(hascat);
+
+    ll u , v ; 
+    vector <vector <ll>> graph(n+1);
+
+    // loop(i , 1 , n+1)
+    // {
+    //     if(graph[i].size() == 0)
+    //     {
+    //         hascat[i] = 0 ;
+    //     }
+    // }
+
+    loop(i , 0 , n-1)
     {
-        print(0 , "\n");
-        return ;
+        cin >> u >> v ; 
+        graph[u].pb(v);
+
     }
 
-    llVec nge = nextGreaterElement(arr);
-    llVec pge = prevGreaterElement(arr);
+    ll catn = hascat[1]?1:0 ; 
+
     
+    vis[1] = 1 ; 
+    dfs(1 , catn , m , hascat , canReach , vis , graph);
+    ll ans = 0 ;
+
+    // print("Can Reach: ");
+    // print(canReach);
+
+    loop(i , 1 , n+1)
+    {
+        if(canReach[i])
+        {
+            // print("Node" , i);
+            ++ans ; 
+        }
+    }
+
+    print(ans);
 }
 
 int main()
