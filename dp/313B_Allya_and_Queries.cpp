@@ -132,7 +132,6 @@ void task()
         print(dp[r-1] - dp[l-1] , "\n");
     }
 
-
 }
 
 int main()
