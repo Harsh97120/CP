@@ -4,6 +4,7 @@ using namespace std;
 int main()
 {
     // No capture 
+    // auto function_name 
     auto sum = [](int a , int b)
     {
         return a + b ; 
