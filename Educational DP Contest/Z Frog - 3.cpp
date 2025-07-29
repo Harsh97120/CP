@@ -99,65 +99,58 @@ class DisJointSet { public: vector<int> size, rank, parent; DisJointSet(int V){ 
 
 int lca(int root, int a, int b, vector<vector<int>> &graph){ if(root == a || root == b) return root; if(graph[root].empty()) return 0; int val1 = 0, val2 = 0, val; for(int child : graph[root]){ val = lca(child, a, b, graph); if(val != 0){ if(val1 == 0) val1 = val; else return root; } } return val1; }
 
+ll f(ll i , ll &n , ll &k , llVec &arr , llVec &dp)
+{
+    if(i == n - 1) return 0 ;
+
+    if(dp[i] != -1) return dp[i] ; 
+
+    ll cost = INT_MAX * 1LL ; 
+
+    for(ll ind = 1;ind <= k;++ind)
+    {
+        if(i+ind == n) break ; 
+        ll t = abs(arr[i+ind] - arr[i]) + f(ind+i , n , k , arr , dp);
+        cost = min(cost , t);
+    }
+
+    return dp[i] = cost ; 
+}
 
 void task()
 {
-    ll n , k ; 
-    cin >> n >> k ; 
+    ll n , c ; 
+    cin >> n >> c ; 
 
     llVec arr(n , 0);
-    ll mod = 1e9 + 7 ; 
 
-    llloop(i , 0 , n) cin >> arr[i];
-    vector <vector <ll>> dp(n+1 , vector <ll> (k+1 , 0));
-
-    // function <ll(ll , ll)> f = [&](ll i , ll k)
-    // {
-    //     if(k == 0) return 1LL ; 
-    //     if(i == n) return 0LL ; 
-
-    //     if(dp[i][k] != -1) return dp[i][k] ;
-
-    //     ll ans = 0  ;
-            
-    //     for(ll ch = 0 ; ch <= arr[i] ; ++ch)
-    //     {
-    //         ans = (ans + f(i+1 , k - ch))%mod;
-    //     }
-        
-    //     return dp[i][k] = ans ; 
-
-    // };
-
-    // ll ans = f(0,k);
-
-    for(ll i=0;i <= n;++i)
+    llloop(i , 0 , n)
     {
-        dp[i][0] = 1LL ;
+        cin >> arr[i];
     }
 
-    for(ll i = n - 1 ; i >= 0 ; --i)
-    {   
-        vector <ll> pre(k+2 , 0);
+    // llVec dp(n , -1);
+    // ll ans = f(0 , n , k , arr , dp);
+    // print(ans , "\n");
 
-        for(ll j =0;j <= k;++j)
+    vector <ll> dp(n , 0LL);
+    
+    for(ll i=n-2 ; i >= 0; --i)
+    {
+        ll cost = LLONG_MAX; 
+
+        for(ll ind = 1;ind <= n;++ind)
         {
-            pre[j+1] = (pre[j] + dp[i+1][j])%mod ; 
+            if(i+ind == n) break ; 
+            if(i+ind < 0) continue ;
+            ll t = (abs(arr[i+ind] - arr[i])*abs(arr[i+ind] - arr[i])) + c + dp[ind+i] ;
+            cost = min(cost , t);
         }
-        
-        for(int tk=1 ; tk <= k; ++tk)
-        {
-            ll R = tk ; 
-            ll l = max(0LL , tk - arr[i]);
-            dp[i][tk] = (pre[R+1] - pre[l] + mod)%mod;
-            
-        }  
+
+        dp[i] = cost ;
     }
 
-
-    ll ans = dp[0][k]; 
-
-    print(ans , "\n");
+    print(dp[0] , "\n");
 }
 
 int main()

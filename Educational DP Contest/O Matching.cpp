@@ -102,62 +102,8 @@ int lca(int root, int a, int b, vector<vector<int>> &graph){ if(root == a || roo
 
 void task()
 {
-    ll n , k ; 
-    cin >> n >> k ; 
-
-    llVec arr(n , 0);
-    ll mod = 1e9 + 7 ; 
-
-    llloop(i , 0 , n) cin >> arr[i];
-    vector <vector <ll>> dp(n+1 , vector <ll> (k+1 , 0));
-
-    // function <ll(ll , ll)> f = [&](ll i , ll k)
-    // {
-    //     if(k == 0) return 1LL ; 
-    //     if(i == n) return 0LL ; 
-
-    //     if(dp[i][k] != -1) return dp[i][k] ;
-
-    //     ll ans = 0  ;
-            
-    //     for(ll ch = 0 ; ch <= arr[i] ; ++ch)
-    //     {
-    //         ans = (ans + f(i+1 , k - ch))%mod;
-    //     }
-        
-    //     return dp[i][k] = ans ; 
-
-    // };
-
-    // ll ans = f(0,k);
-
-    for(ll i=0;i <= n;++i)
-    {
-        dp[i][0] = 1LL ;
-    }
-
-    for(ll i = n - 1 ; i >= 0 ; --i)
-    {   
-        vector <ll> pre(k+2 , 0);
-
-        for(ll j =0;j <= k;++j)
-        {
-            pre[j+1] = (pre[j] + dp[i+1][j])%mod ; 
-        }
-        
-        for(int tk=1 ; tk <= k; ++tk)
-        {
-            ll R = tk ; 
-            ll l = max(0LL , tk - arr[i]);
-            dp[i][tk] = (pre[R+1] - pre[l] + mod)%mod;
-            
-        }  
-    }
-
-
-    ll ans = dp[0][k]; 
-
-    print(ans , "\n");
+    ll n ; 
+    cin >> n ; 
 }
 
 int main()
