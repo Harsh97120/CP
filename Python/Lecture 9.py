@@ -120,8 +120,8 @@ class Complex:
     def showNumber(self):
         print(self.real ,"i +" , self.img , "j")
         
-        
-    def __add__(self , num2):
+    # __T__ is for operator overloading 
+    def __add__(self , num2): 
         newReal = self.real + num2.real 
         newImg = self.img + num2.img 
         
